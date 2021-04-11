@@ -1,40 +1,18 @@
-import React from 'react'
+import React from 'react';
 
-const User = ({
-    userCard: {
-        avatar_url,
-        name,
-        login,
-        bio,
-        location, 
-        following,
-    }
-})
-
-
-
-
+class User extends React.Component {
+  render() {
     return(
-            <div>
-            <div>
-                <img src={avatar_url} />
-            </div>
-            <div>
-                <h1>{name}</h1>
-                <div>
-                    <ul>
-                        <ul>Login: {login}</ul>
-                        <ul>Bio: {bio}</ul>
-                        <ul>Location: {location}</ul>
-                        <ul>Following: {following}</ul>
-                    </ul>
-                </div>
-            </div>
-            </div>
-        );
-
-
-
-
+      <div className ="container">
+        <img key = {this.props.users.avatar_url} src = {"https://avatars.githubusercontent.com/u/49046108?v=4"} alt ="avatar"/>
+        <p>Username: {this.props.users.login}</p>
+        <p>Name: {this.props.users.name}</p>
+        <p>Bio: {this.props.users.bio}</p>
+        <p>Followers: {this.props.users.followers}</p>
+        <p>Following: {this.props.users.following}</p>
+      </div>
+    )
+  }
+}
 
 export default User;

@@ -5,55 +5,43 @@ import './App.css';
 
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      userCard: {}
-    }
+  state = {
+    users: []
   }
+   
 
+  componentDidMount() {
+    axios.get("https://api.github.com/users/halliwell2046")
+    .then(res => {
+      console.log(res.data)
+      this.setState({
+        ...this.state,
+        users: res.data        
+      })
+    })
+    .catch(err => {
+      console.log("Unable to fetch User",err)
+    })
 
-componentDidMount() {
-  axios.get("https://api.github.com/users")
-  .then((res) => {
-    this.setState({...this.state, userCard: res.data})
-    console.log(res.data)
-  }) 
-  .catch(err => console.log(err))
+    axios.get("https://api.github.com/users/halliwell2046/followers")
+    .then(res => {
+      console.log("fetch data", res)
+      this.setState({
+        ...this.state, 
+        users: res.data
+      })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+  render() {
+    return(
+      <div className="App">
+        <h1>Github User Card Lifecycle</h1>
+        <User users ={this.state.users}/>
+      </div>  
+    )
+  }
 }
-
-componentDidUpdate(prevProps, prevStates) {
-  console.log("component updated and running")
-}
-
-
-// fetchUsers = () => {
-//   axios.get("https://api.github.com/users")
-//   .then(res => {
-//     this.setState({...this.state, users: res.data})
-//   }) 
-//   .catch(err => console.log(err))
-// }
-
-// handleChanges = event => {
-//   this.setState({
-//     ...this.state,
-//     users: event.target.value
-//   })
-// }
-
-
-render() {
-  return (
-    <div className="App">
-    <h1>Github User Card Lifecycle</h1>
-    <User userCard={this.state.userCard} />
-    </div>
-  )
-}
-}
-
-
-  
-
 export default App;
